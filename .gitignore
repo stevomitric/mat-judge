@@ -7,3 +7,5 @@
 # docs
 *tmp
 *.info
+# test files
+*stress_test.py

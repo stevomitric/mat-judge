@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+
+        <title>Mat-judge</title>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 p-5">
+                    <form class="text-center border border-light p-5" action="" onsubmit="return false;">
+
+                        <h4 class="mb-1">Submit code <kbd>/api/v0/submit</kbd> </h4>
+                        
+                        <code>
+                            Write a program to sum two integers.</br> </br>
+                        </code>
+                        
+                        <div class="form-group">
+                            <textarea class="form-control rounded-0" id="code" rows="10">
+#include <iostream>
+using namespace std;
+int main(){
+    int a, b;
+    cin >> a >> b;
+    cout << a + b << endl;
+    return 0;
+}
+                            </textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="language">Language</label>
+                                <select class="custom-select p-2" id = 'language'>
+                                    <option value="c++11">C++ 11</option>
+                                    <option value="c++14">C++ 14</option>
+                                    <option value="c++17">C++ 17</option>
+                                </select>
+                                
+                            </div>
+                            <div class="col-md-4">
+                                <label for="time_limit">Time (ms)</label>
+                                <input type="text" id="time_limit" class="form-control" value="1000">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="mem_limit">Memory (MB)</label>
+                                <input type="text" id="mem_limit" class="form-control" value="256">
+                            </div>
+                        </div>
+                        <button class="btn btn-success btn-block my-4" onclick="submitFun()">Submit</button>
+
+                        <h4><span class=" " id="submit-span" > </span><h4 id="submit-text">  </h4> </h4>
+                    </form>
+                </div>
+                <div class="col-md-6 p-5">
+                    <form class="text-center border border-light p-5"  action="" onsubmit="return false;">
+                        <h4 class="mb-4">Status response <kbd>/api/v0/status</kbd> </h4>
+
+                        <label for="mem_limit">Suvmission ID</label>
+                        <input type="text" id="sub_id" class="form-control" value="">
+
+                        <button class="btn btn-success btn-block my-4" onclick="statsFun()">Status</button>
+
+                        <h4><span class=" " id="submit-span2" > </span><h4 id="submit-text2">  </h4> </h4>
+                    </form>
+                </div>
+                
+            </div>
+            
+        </div>
+
+        <script>
+            function submitFun() {
+                var e = document.getElementById("language");
+                var lang = e.options[e.selectedIndex].value;
+                var data = new FormData();
+                data.append('language',lang);
+                data.append('code',document.getElementById("code").value);
+                data.append('time_limit',document.getElementById("time_limit").value);
+                data.append('memory_limit',document.getElementById("mem_limit").value);
+                data.append('testcases',"[('1 1','2'),('-1 1', '0'),('100 1', '101')]");
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "http://"+window.location.host+"/api/v0/submit", true);
+                //xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+                
+                xhr.onreadystatechange = function () {
+                    if (this.readyState != 4) return;
+
+                    if (this.status == 200) {
+                        var data = JSON.parse(this.responseText);
+
+                        if (data["success"]) {
+                            // submitovan
+                            document.getElementById("submit-span").textContent = "Submited"
+                            document.getElementById("submit-span").className = "badge badge-success"
+                            document.getElementById("submit-text").textContent = "Submission id: " + data["submission_id"];
+                            document.getElementById("sub_id").value = data["submission_id"];
+                        }
+                        else {
+                            document.getElementById("submit-span").textContent = "Error"
+                            document.getElementById("submit-span").className = "badge badge-danger"
+                            document.getElementById("submit-text").textContent = data["error"];
+                        }
+                    }
+                };
+                
+                xhr.send(data);
+            }
+
+            function statsFun() {
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "http://"+window.location.host+"/api/v0/status?submission_id="+document.getElementById("sub_id").value, true);
+
+                xhr.onreadystatechange = function () {
+                    if (this.readyState != 4) return;
+
+                    if (this.status == 200) {
+                        var data = JSON.parse(this.responseText);
+
+                        if (data["success"]) {
+                            // proveri da li je running
+                            if (data['running']) {
+                                document.getElementById("submit-span2").textContent = "Running"
+                                document.getElementById("submit-span2").className = "badge badge-primary"
+                                document.getElementById("submit-text2").textContent = "";
+                            }
+                            else {
+                                document.getElementById("submit-span2").textContent = "Response"
+                                document.getElementById("submit-span2").className = "badge badge-success"
+                                document.getElementById("submit-text2").textContent = data["code"];
+                            }
+                        }
+                        else {
+                            document.getElementById("submit-span2").textContent = "Error"
+                            document.getElementById("submit-span2").className = "badge badge-danger"
+                            document.getElementById("submit-text2").textContent = data["error"];
+                        }
+                    }
+                };
+                
+                xhr.send();
+            }
+        </script>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+    </body>
+
+</html>

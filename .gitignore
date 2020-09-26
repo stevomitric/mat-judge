@@ -1,0 +1,9 @@
+# Compiled files
+*.pyc
+# Cache dirs
+*pycache*
+# databses
+*.sqlite*
+# docs
+*tmp
+*.info

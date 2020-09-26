@@ -1,0 +1,581 @@
+FORMAT: 1A
+HOST: http://localhost:5000/api/v0
+
+# Code Judge & testing API
+
+Execute, judge and evaluate code in an isolated secure enviroment.
+
+## Mat-judge overview
+Mat-judge is an open source online judging system. It executes and evaluates code based on specified parameters. With easy installation, you can integrate it into your application in no time :rocket:
+
+Features include:
+* Isolated code execution
+* Runtime limit
+* Memory usage limit
+* 10 languages support
+* [Token Authorization](/#header-authorization)
+* Worker resource distribution
+* SQLite data storage
+* Fast flask API response
+* Full submission report
+* Passive submissions
+* Clientside/Serverside usage
+* Request limitations and overhead management
+
+## Authorization
+
+Token Authorization can be turned off/on through [settings](/#settings-settings-post) api call, the status of which can be viewed by [info request](/#settings-info-get).
+
+Tokens have following properties:
+* owner
+* access_level
+* expiration
+
+Access level is described by an integer value:
+* 4 - public *(status request)*
+* 3 - user *(submit request)*
+* 2 - moderator *(testcases request)*
+* 1 - administrator *(token & settings managment requests)*
+
+::: note
+Tokens with higher permission levels have access to everything lower levels do.
+
+Example: *User* (3) can both do *submit* and *status* requests.
+:::
+
+Expiration is provided upon creation of tokens. Once expired, token becomes invalid.
+
+## Instalation
+
+Since this is built with pure python3.6, without any additional modules (except flask), you can run it on Windows, Linux or Mac. Assuming you have python 3.x and pip3 installed:
+
+* Download or clone mat-judge [github]() repo.
+* install flask module for python3
+    * `pip3 install flask`
+* Run the api
+    * `python3 api.py`
+
+You're all set!
+
+You can run `pytho3 api.py --help` to view command-line options for api.
+
+By default, if you're running Linux, a single worker module will be spawned. You can take advantage of the *worker distribution* feature and run multiple workers on different machines, expanding resources and increasing maximum workload. This is recommended (and easily done) by opening an ssh tunnel and securely connecting the worker to the API.
+
+## Development
+
+Current version is **V1.1**, 25.09.2020.
+
+Developed by *Stevo Mitric*, Software Engineering student at ETF, Belgrade. *stevomitric2000@gmail.com*
+
+Project code name: *Mat-judge*
+
+::: note
+## Few notes
+* Requests with *body* can be sent in any format. (`application/x-www-form-urlencoded`, `application/form-data` or `application/json`)
+* All successful calls to the API response with `200` status code.
+* `success` field determines whether that request was processed successfully or not.
+* If `token_access` is turned on, you'll need to provide `token` field (in the *body* of the request) with valid permission level for that request.
+:::
+
+# Group Judge
+
+## Submission [/submit]
+Send code for evaluation and judging process.
+*Access level 3 (user)*
+::: note
+## Note
+You should pass either *testcases* or *testcases_id* field.
+:::
+
+::: note
+## Passive submissions
+* *Passive submissions* are meant to judge code on an already set specifications.
+* They are **off** by default.
+* Once turned on (by [settings](/#settings-settings-post) request), they will only accept fields: `code`, `language`, `testcases_id`.
+* Passive submissions are used if the API is served to the users *directly*.
+:::
+
+### Submiting Code [POST]
+
++ Parameters
+    + code (string, required) - Code to be executed
+    + language (string, required) - Language identifier (get available languages by [info request]())
+
+        + members
+            + c++11
+            + c++14
+            + c++17
+            + c11
+            + py3
+
+    + time_limit (number, optional) - Time limit in **milliseconds**.
+        Must be *> 100 and < 15000*
+        + default 1000
+
+    + memory_limit (number, optional) - Memory limit in **MB**
+        Must be *> 4 and < 257*
+        + default 256
+
+    + testcases (string, optional) - List of tuples.
+        Tuple values are **strings**. Thre first value in tuple is input passed to the program, and the second value is expected output.
+
+    + testcases_id (number, optional) - ID of stored testcases
+
+    + grader (string, optional) - Grader script to judge AC/WA based on programs & expected outputs.
+        See Grader script information for more details and required format.
+
++ Request Simple code submissions
+    + Body
+        {
+            "code": '#include <iostream>
+                        int main() {
+                            std::cout << "Hello World!";
+                            return 0;
+                        }',
+            "language": "c++11",
+            "time_limit": 1000,
+            "memory_limit": 1000,
+            "testcases": [ ("1 2", "3"),  ("-10 7", "-3"), ("10 11", "21") ]
+        }
+
++ Response 200
+    + Body
+        {
+            "success": true,
+            "submission_id": 51,
+        }
+
++ Response 200
+    If token access has been turned on, 'token' parameter must be specified in the **body** of the request.
+    + Body
+        {
+            "success": false,
+            "error": "Token must be specified"
+        }
+
+## Status [/status?submission_id={submission_id}]
+Fetch status of a submission. *Access level 4 (public)*
+
+### Submission Status [GET]
++ Parameters
+    + submission_id (number, required) - Submission identifier
+
+    + output (bool, optional) - Whether to return the output or not
+        + default false
+
++ Request /status?submission_id=154
++ Response 200
+    If the submission has been fully judged, `code` field can have the following responses: **AC** (Accepted), **WA** (Wrong answer), **RE** (Runtime Error), **CE** (Compile Error), **TLE** (Time Limit Exceeded), **MLE** (Memory Limit Exceeded)
+    + Body
+        {
+            "code": "AC",
+            "judged": 33,
+            "run_time": 131,
+            "running": false,
+            "success": true
+        }
++ Response 200
+    If the submission runs into **CE**, *error* field will be provided with the explanation.
+    + Body
+        {
+            "code": "CE",
+            "error": "sandbox/7512331/main.cpp: In function ‘int main()’:\nsandbox/7512331/main.cpp:4:7: error: expected initializer before ‘b’\n int a b;\n       ^\nsandbox/7512331/main.cpp:5:8: error: ‘a’ was not declared in this scope\n cin >> a >> b;\n        ^\nsandbox/7512331/main.cpp:5:13: error: ‘b’ was not declared in this scope\n cin >> a >> b;\n             ^\n",
+            "judged": 0,
+            "running": false,
+            "success": true
+        }
+
++ Response 200
+    If the submission is running, *judged* field will point out how many testcases have been judged so far.
+    + Body
+        {
+            "success": true,
+            "running": true,
+            "judged": 24,
+        }
+
++ Response 200
+    If an invalid `submission_id` has been provided:
+    + body
+        {
+            "success": false,
+            "error": "Invalid submission ID"
+        }
+
++ Request /status?submission_id=154&output=True
++ Response 200
+    If the output parameter is set to `True`, output field in the response will be a list of lists. Each list corresponds to one testcase, and is formated by: `[code, run_time, prog_output, judge_verdict]`
+    + Body
+        {
+            "code": "AC",
+            "judged": 3,
+            "output": [
+                [
+                    "AC",
+                    "1",
+                    "2\n",
+                    "OK"
+                ],
+                [
+                    "AC",
+                    "1",
+                    "4\n",
+                    "OK"
+                ],
+                [
+                    "AC",
+                    "1",
+                    "-3\n",
+                    "OK"
+                ]
+            ],
+            "run_time": 1,
+            "running": false,
+            "success": true
+        }
+
+
+### Grader Script Specifications [/]
+Grader script is called when the following criteria are met:
+* Code compiled successfully
+* Program executed within the time and memory limits
+
+Grader script should follow these rules:
+* Is compatible with mat-judge python3 version
+* Has function `judge(input, output, prog_output)`, each argument is a string.
+* Returns `(state, msg)`, where the state is `True`/`False` indicating 'AC' or 'WA', and msg is the grader verdict (can be "OK", "passed", "String mismatch at position x", etc.)
+* Script shouldn't contain:
+    * Other modules
+    * `eval` and `exec`
+    * Functions in global scope (function nesting is allowed)
+
+Following is the default grader script:
+``` python
+    def judge(input, output, prog_output):
+        ''' Script to determine WA/AC '''
+        data1 =  output.strip()
+        data2 =  prog_output.strip()
+
+        state = data1 == data2
+        if (state):
+            msg = 'OK'
+        else:
+            msg = 'Strings missmatch: ' + data2[0:10] + " (expected) - "+data1[0:10] + " (got)"
+
+        return (state, msg)
+```
+
+::: note
+* Default grader compares program output and expected output.
+
+* `input` parameter is not used, but might be helpful in other situations.
+:::
+
+## Testcases [/testcases]
+Upload a testcase for later use. *Access level 2 (moderator)*
+
+Useful in cases where:
+* Testcases are large
+* There are lots of submissions running same tests
+* Clientside usage with *Passive Submissions*
+
+### Store testcases [PUT]
++ Parameters
+    + testcases (string, required) - List of tuples
+
++ Request (multipart/form-data)
+    List of lists is also acceptable.
+    + Body
+        {
+            "testcases": "[
+                ('1000 2', '15251'),
+                ('214 5' '2151')
+            ]"
+        }
++ Response 200
+    + Body
+        {
+            "success": true,
+            "testcases_id": 313
+        }
+
+# Group Settings
+
+## Tokens [/token]
+Create tokens and grant permissions.
+### Create a new Token [POST]
+*Access level 1 (administrator)*
++ Parameters
+    + owner (string, required) - Token owner or identification
+    + access_level (number, required) - What requests token has permission to access.
+        More information about access levels can be found [here](/#header-authorization)
+        + members
+            + 1
+            + 2
+            + 3
+            + 4
+    + expiration (number, optional) - Number of seconds token will be valid for, -1 for indefinite
+        + default -1
++ Request (multipart/form-data)
+    + Body
+        {
+            "owner": "Stevo",
+            "access_level": 5,
+            "expiration": 60*60*24*365,
+        }
++ Response 200 (application/json)
+    + Body
+        {
+            "success": true,
+            "token": "iojageiogoani1390fmalnAIBGENgi13nK",
+        }
+### Delete token [DELETE]
+Permanently delete a token. *Access level 1 (administrator)*
+::: warning
+* One of two parameters must be provided.
+* If owner field is given, all tokens with corresponding owner will be deleted
+* If both parameters are provided, the *owner* will be ignored
+:::
++ Parameters
+    + token_delete (string, optional) - Token to delete
+    + owner (string, optional) - Owner of the token(s) to delete
+
+### Token information [GET]
+*Access level / (none)*
++ Parameters
+    + token (string, required) - token
++ Request /token?token=iojageiogoani1390fmalnAIBGENgi13nK
++ Response 200
+    + Body
+        {
+            "access_level": 1,
+            "expiration": 9999998399196362.0,
+            "owner": "stevo",
+            "success": true,
+            "token": "iojageiogoani1390fmalnAIBGENgi13nK"
+        }
+
+## Info [/info]
+Relevant API information and settings currently set in place. *Access level / (none)*
+
+### Mat-judge information [GET]
++ Request /info
++ Response 200
+    + Body
+        {
+            "ip_status_timeout": 100,
+            "ip_submit_timeout": 5000,
+            "languages": [
+                "c++11",
+                "c++14",
+                "c++17"
+            ],
+            "passive_submissions": false,
+            "token_access": false,
+            "workers_active": 1
+        }
+
+## Settings [/settings]
+Change API settings. *Access level 1 (administrator)*
+### Change API settings [POST]
++ Parameters
+    + token_access (bool, optional) - Disable/enable token access
+        + Members
+            + True
+            + False
+    + passive_submissions (bool, optional) - Disable/enable [Passive submissions](/#judge)
+        + Members
+            + True
+            + False
+    + ip_status_timeout (number, optional) - Cooldown period after status request in **milliseconds** (only for status requests)
+        + Default `100`
+    + ip_submit_timeout (number, optional) - Cooldown period after submit request in **milliseconds** (only for submit requests)
+        + Default `5000`
+
+
+# Group Examples
+The following examples will illustrate how to use the API.
+
+## Submitting code
+Let's define the following problem:
+
+> Read two integers from standard input, and output their sum.
+
+The first thing we should do is make up some test cases.
+
+Input | output |
+-----:| ------ |
+ 1 3  | 4      |
+ -1 4 | 3      |
+ 10 5 | 15     |
+
+We need to save these test cases as a list of tuples. Lets create a file `testcases.txt` and paste in the following:
+``` json
+[
+    ("1 3", "4"),
+    ("-1 4", "3"),
+    ("10 5", "15")
+]
+```
+
+Now lets write our program for this problem and save it to `problem.cpp`
+``` cpp
+#include <iostream>
+int main() {
+    int a,b;
+    std::cin >>a>>b;
+    std::cout << a+b;
+    return 0;
+}
+```
+
+The only thing left now is to call our API. We can use curl for this:
+``` js
+curl -X POST -H "Content-Type: application/x-www-form-urlencoded"
+     --data-urlencode code@program.cpp --data-urlencode testcases@testcases.txt
+     --data-urlencode language=c++11
+     http://localhost:5000/api/v0/submit
+```
+
+And we get the following response:
+``` js
+{
+    "submission_id": 16,
+    "success":true
+}
+```
+
+::: note
+* Other optional arguments were omitted.
+:::
+
+
+## Checking the submission status
+Let's check the status of previous submission.
+
+``` js
+curl http://localhost:5000/api/v0/status?submission_id=16
+```
+We get following response:
+``` js
+{
+    "code": "AC",
+    "judged": 2,
+    "run_time": 4,
+    "running": false,
+    "success": true
+}
+```
+
+Let's check with `output` parameter to get the detailed report of each test case:
+
+``` js
+curl http://localhost:5000/api/v0/status?submission_id=16&output=True
+```
+
+::: note
+On Windows you should enclose url string with double quotes, since it may complain about '&' character:
+``` js
+curl "http://localhost:5000/api/v0/status?submission_id=16&output=True"
+```
+:::
+
+``` js
+{
+    "code": "AC",
+    "judged": 3,
+    "output": [
+        [
+            "AC",
+            "1",
+            "4",
+            "OK"
+        ],
+        [
+            "AC",
+            "1",
+            "3",
+            "OK"
+        ],
+        [
+            "AC",
+            "1",
+            "15",
+            "OK"
+        ]
+    ],
+    "run_time": 1,
+    "running": false,
+    "success": true
+}
+```
+::: note
+The `output` field is a list of lists. Each list corresponds with one test case, in order they appear. The values in each list are as follows:
+* code - `AC`, `WA`, `CE`, `RE`, `TLE`, `MLE`
+* execution time (in *milliseconds*)
+* programs output
+* judge verdict (grader script)
+:::
+
+## Uploading a testcase
+Running large amounts of different codes on a same testcase batch, can present a strain on the network, especially if testcases are large in size (measured in MB in some cases).
+
+To avoid uploading testcases every time, you can store them on the server and then reference them by ID.
+
+Let's store previous testcases (assuming they are stored in `testcases.txt` as shown [here](/#header-submitting-code))
+
+```js
+curl -X PUT --data-urlencode testcases@testcases.txt http://localhost:5000/api/v0/testcases
+```
+Response will contain `testcases_id` which you can provide in [submit](/#judge-submission-post) request instead of `testcases`.
+``` js
+{
+    "success": true,
+    "testcase_id": 1,
+    "testcases": [
+        ["1 3", "4"],
+        ["-1 4", "3"],
+        ["10 5", "15"]
+    ]
+}
+```
+
+## Using custom grader script
+
+Grader script can be useful if there are multiple answers to the problem. For example, let the following problem be given:
+
+> Given an integer X, print **one** of its **prime** factors.
+
+Example:
+
+Input | output |
+-----:| ------ |
+ 100  | 5      |
+ 52   | 2      |
+ 9    | 3      |
+ Obviously, static output can't be made, because answer `2` for `X=100` is also acceptable.
+
+ In this case, in testcases, you should leave the second argument of tuples as an **empty** string (any value will do, but since it won't be used, it's better to leave it blank).
+
+ Now let's modify the grader script for our problem. We'll model it based on the [default Script](/#judge-grader-script-specifications). Make sure you have read all *rules* regarding grader scripts [here](/#judge-grader-script-specifications).
+
+ ``` python
+    def judge(input, output, prog_output):
+        ''' Script to determine WA/AC '''
+        try: # First let's try to convert program output to integer
+            prog_output = int(prog_output)
+            input = int(input)
+        except: # If program returned something that cant be converted to integer
+            return (False, "Program returned non-integer value")
+
+        # one line function to check if integer is prime
+        is_prime = lambda x: sum([1 for i in range(2,x) if x%i==0])==0
+
+        if is_prime(prog_output) and prog_output > 1:
+            if (input%prog_output == 0):
+                return (True, "Ok")
+            else:
+                return (False, "Integer isnt a factor")
+        else:
+            return (False, "Integer is not prime")
+```

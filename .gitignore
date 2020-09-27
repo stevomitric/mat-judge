@@ -9,3 +9,5 @@
 *.info
 # test files
 *stress_test.py
+# ps files
+*.psd

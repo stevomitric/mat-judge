@@ -1,100 +1,557 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>Code Judge &amp; testing API</title><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><style>.hljs-comment,.hljs-quote{color:#9e8f9e}.hljs-attribute,.hljs-link,.hljs-name,.hljs-regexp,.hljs-selector-class,.hljs-selector-id,.hljs-tag,.hljs-template-variable,.hljs-variable{color:#ca402b}.hljs-built_in,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-type{color:#a65926}.hljs-bullet,.hljs-string,.hljs-symbol{color:#918b3b}.hljs-section,.hljs-title{color:#516aec}.hljs-keyword,.hljs-selector-tag{color:#7b59c0}.hljs{display:block;overflow-x:auto;background:#1b181b;color:#ab9bab;padding:.5em}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}.right .hljs-comment,.right .hljs-quote{color:#776977}.right .hljs-attribute,.right .hljs-link,.right .hljs-name,.right .hljs-regexp,.right .hljs-selector-class,.right .hljs-selector-id,.right .hljs-tag,.right .hljs-template-variable,.right .hljs-variable{color:#ff6a7c}.right .hljs-built_in,.right .hljs-literal,.right .hljs-meta,.right .hljs-number,.right .hljs-params,.right .hljs-type{color:#ffa96a}.right .hljs-bullet,.right .hljs-string,.right .hljs-symbol{color:#918b3b}.right .hljs-section,.right .hljs-title{color:#516aec}.right .hljs-keyword,.right .hljs-selector-tag{color:#7b59c0}.right .hljs{display:block;overflow-x:auto;background:#f7f3f7;color:#695d69;padding:.5em}.right .hljs-emphasis{font-style:italic}.right .hljs-strong{font-weight:700}@font-face{font-family:'Proxima Nova';font-weight:bold;font-style:normal;src:url('/assets/fonts/349715_0_0.eot');src:url('/assets/fonts/349715_0_0.eot?#iefix') format('embedded-opentype'),url('/assets/fonts/349715_0_0.woff2') format('woff2'),url('/assets/fonts/349715_0_0.woff') format('woff'),url('/assets/fonts/349715_0_0.ttf') format('truetype')}@font-face{font-family:'Proxima Nova';font-weight:normal;font-style:normal;src:url('/assets/fonts/349715_1_0.eot');src:url('/assets/fonts/349715_1_0.eot?#iefix') format('embedded-opentype'),url('/assets/fonts/349715_1_0.woff2') format('woff2'),url('/assets/fonts/349715_1_0.woff') format('woff'),url('/assets/fonts/349715_1_0.ttf') format('truetype')}body{color:#3b4151;background:#FFF;overflow-x:hidden;font:400 16px 'Proxima Nova','Helvetica','Arial',sans-serif;margin:8px}header{border-bottom:1px solid #f2f2f2;margin-bottom:12px}.middle article,.middle aside,.middle blockquote,.middle details,.middle figcaption,.middle figure,.middle footer,.middle h1,.middle h2,.middle h3,.middle h4,.middle h5,.middle h6,.middle header,.middle hgroup,.middle hr,.middle img,.middle li,.middle main,.middle nav,.middle ol,.middle p,.middle pre,.middle section,.middle summary,.middle ul{display:block;float:left;width:100%;height:auto}.middle li{display:list-item}h1,h2,h3,h4,h5{color:#3b4151;margin:12px 0}h1 .permalink,h2 .permalink,h3 .permalink,h4 .permalink,h5 .permalink{margin-left:0;opacity:0;transition:opacity .25s ease}h1:hover .permalink,h2:hover .permalink,h3:hover .permalink,h4:hover .permalink,h5:hover .permalink{opacity:1}.triple h1 .permalink,.triple h2 .permalink,.triple h3 .permalink,.triple h4 .permalink,.triple h5 .permalink{opacity:.05}.triple h1:hover .permalink,.triple h2:hover .permalink,.triple h3:hover .permalink,.triple h4:hover .permalink,.triple h5:hover .permalink{opacity:.15}h1{font:700 36px 'Proxima Nova','Helvetica','Arial',sans-serif;font-size:54px}h2{font:700 36px 'Proxima Nova','Helvetica','Arial',sans-serif;font-size:26px}h3{font-size:30px}h5{font-size:100%;font-weight:normal}p{margin:0 0 10px}p.choices{line-height:1.6}a{color:#318FA9;text-decoration:none}li p{margin:0}hr.split{display:none}dl dt{float:left;width:130px;clear:left;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}dl dd{margin-left:150px}blockquote{color:rgba(59,65,81,0.5);font-size:15.5px;padding:10px 20px;margin:12px 0;border-left:5px solid #2b3237}blockquote p:last-child{margin-bottom:0}pre{background-color:#202529;padding:12px;border:1px solid #424c54;border-radius:6px;overflow:auto}pre code{color:#3b4151;background-color:transparent;padding:0;border:none}code{color:#584773;background-color:#fafafc;font:'SFMono-Regular','Consolas','Liberation Mono','Menlo','Courier',monospace;padding:1px 4px;border:1px solid #e3e4e7;border-radius:3px}ul,ol{padding-left:2em}table{border-collapse:collapse;border-spacing:0;margin-bottom:12px}table tr:nth-child(2n){background-color:#fafafa}table th,table td{padding:6px 12px;border:1px solid #e6e6e6}.text-muted{opacity:.5}.note,.warning{padding:.3em 1em;margin:1em 0;border-radius:2px;font-size:90%}.note h1,.warning h1,.note h2,.warning h2,.note h3,.warning h3,.note h4,.warning h4,.note h5,.warning h5,.note h6,.warning h6{font-family:700 36px 'Proxima Nova','Helvetica','Arial',sans-serif;font-size:135%;font-weight:500}.note p,.warning p{margin:.5em 0}.note{color:#3b4151;background-color:#f2fafc;border-left:4px solid #5bc0de}.note h1,.note h2,.note h3,.note h4,.note h5,.note h6{color:#5bc0de}.warning{color:#3b4151;background-color:#fdf1f0;border-left:4px solid #e9322d}.warning h1,.warning h2,.warning h3,.warning h4,.warning h5,.warning h6{color:#e9322d}header{margin-top:24px;margin-bottom:40px}nav{position:fixed;top:24px;bottom:0;overflow-y:auto;padding-left:10px}nav .resource-group{padding:0}nav .resource-group .heading{position:relative}nav .resource-group .heading .chevron{position:absolute;top:12px;right:12px;opacity:.5}nav .resource-group .heading a{display:block;color:#3b4151;opacity:.7;border-left:2px solid transparent;margin:0}nav ul{list-style-type:none;padding-left:0}nav ul a{display:block;font-size:14.85714286px;color:#5d6576;padding:8px 12px;border-left:2px solid transparent;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}nav ul a:hover{color:#3c4151}nav ul>li{margin:0}nav ul>li:first-child{margin-top:-12px}nav ul>li:last-child{margin-bottom:-12px}nav ul ul a{padding-left:24px}nav ul ul li{margin:0}nav ul ul li:first-child{margin-top:0}nav ul ul li:last-child{margin-bottom:0}nav .badge{display:none}nav>div>div>ul>li:first-child>a{border-top:none}.preload *{transition:none !important}.pull-left{float:left}.pull-right{float:right}.badge{display:inline-block;float:right;min-width:10px;min-height:16px;padding:3px 7px;font-size:12px;color:#000;background-color:#f2f2f2;border-radius:10px;margin:-2px 0}.badge.get{color:white;background-color:#5bc0de}.badge.head{color:white;background-color:#5bc0de}.badge.options{color:white;background-color:#5bc0de}.badge.put{color:white;background-color:#f89406}.badge.patch{color:white;background-color:#f89406}.badge.post{color:white;background-color:#62c462}.badge.delete{color:white;background-color:#ee5f5b}.collapse-button{float:right}.collapse-button .close{display:none;color:#318FA9;cursor:pointer}.collapse-button .open{color:#318FA9;cursor:pointer}.collapse-button.show .close{display:inline}.collapse-button.show .open{display:none}.collapse-content{max-height:0;overflow:hidden;transition:max-height .3s ease-in-out}nav{width:220px}.container{max-width:940px;margin-left:auto;margin-right:auto}.container .row .content{margin-left:244px;width:696px}.container .row:after{content:'';display:block;clear:both}.container-fluid nav{width:22%}.container-fluid .row .content{margin-left:24%}.container-fluid.triple nav{width:16.5%;padding-right:1px}.container-fluid.triple .row .content{position:relative;margin-left:16.5%;margin-right:-8px;padding-left:24px}.middle:before,.middle:after{content:'';display:table}.middle:after{clear:both}.middle{box-sizing:border-box;width:51.5%;padding-left:40px;padding-right:40px}.right{box-sizing:border-box;float:right;width:48.5%}.right a{color:#999}.right h1,.right h2,.right h3,.right h4,.right h5,.right p,.right div{color:#FFF}.right h5,.right>a,.right>.tabs{padding-left:40px}.right>.tabs{padding-right:40px}.right .inner>h5{padding-left:0;padding-bottom:8px;border-bottom:1px solid #373b48}.right pre{padding-left:0;padding-right:0;background:none;border:none}.right pre code{color:#a5a8ae}.right .description{margin-top:12px}.definition{margin-top:12px;margin-bottom:40px;padding:20px 10px 20px 40px;border-top:1px solid #3a3e4d;border-bottom:1px solid #3a3e4d;font-size:14px;line-height:20px}.definition .method{border:2px solid #c1c6d1;padding:1px 7px;border-radius:4px;font-size:13px;font-weight:bold}.definition .uri{word-break:break-all;word-wrap:break-word}.definition .hostname{opacity:.8}.example-names{background-color:#eee;padding:12px;border-radius:6px}.example-names .tab-button{cursor:pointer;color:#3b4151;border:1px solid #ddd;padding:6px;margin-left:12px}.example-names .tab-button.active{background-color:#d5d5d5}.right .example-names{margin-bottom:20px;padding-left:0;border-bottom:1px solid #373b48;background:none}.right .example-names .tab-button{color:#FFF;border:1px solid #2c303e;border-radius:6px}.right .example-names .tab-button.active{background-color:#353b48}#nav-background{position:fixed;left:0;top:0;bottom:0;width:16.5%;padding-right:14.4px;background-color:#FFF;border-right:1px solid transparent;z-index:-1}#right-panel-background{position:absolute;right:-8px;top:-8px;bottom:-8px;width:48.2%;background-color:#2c303e;z-index:-1}@media (max-width:1200px){nav{width:198px}.container{max-width:840px}.container .row .content{margin-left:224px;width:606px}}@media (max-width:992px){nav{width:169.4px}.container{max-width:720px}.container .row .content{margin-left:194px;width:526px}}@media (max-width:768px){nav{display:none}.container{width:95%;max-width:none}.container .row .content,.container-fluid .row .content,.container-fluid.triple .row .content{margin-left:auto;margin-right:auto;width:95%}#nav-background{display:none}#right-panel-background{width:48.2%}}.back-to-top{position:fixed;z-index:1;bottom:0;right:24px;padding:4px 8px;color:rgba(59,65,81,0.5);background-color:#f2f2f2;text-decoration:none !important;border-top:1px solid #d9d9d9;border-left:1px solid #d9d9d9;border-right:1px solid #d9d9d9;border-top-left-radius:3px;border-top-right-radius:3px}.resource-group{padding:12px;margin-bottom:12px;border-radius:6px}.resource-group h2.group-heading,.resource-group .heading a{margin:-12px -12px 12px -12px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.middle .resource-group{margin-top:40px}.middle .resource-group h2.group-heading,.middle .resource-group .heading a{font-size:36px}.triple .content .resource-group{padding:0;border:none}.triple .content .resource-group h2.group-heading,.triple .content .resource-group .heading a{margin:0 0 12px 0}nav .resource-group .heading a{padding:12px;margin-bottom:0;font-size:14px;text-transform:uppercase;color:#318FA9}nav .resource-group .heading a:hover{color:#266e81}nav .resource-group .collapse-content{padding:0}.action{margin-bottom:12px;padding-top:12px;overflow:hidden;border:1px solid transparent;border-radius:6px}.action h4.action-heading{margin-top:0;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.action h4.action-heading .name{display:inline-block;margin-top:4px;font-size:20px;line-height:125%}.action h4.action-heading .method{float:left;padding:6px 12px;margin-right:12px;border-radius:3px}.action h4.action-heading .method.get{color:#fff;background-color:#318FA9}.action h4.action-heading .method.head{color:#fff;background-color:#318FA9}.action h4.action-heading .method.options{color:#fff;background-color:#318FA9}.action h4.action-heading .method.put{color:#fff;background-color:#945904}.action h4.action-heading .method.patch{color:#fff;background-color:#945904}.action h4.action-heading .method.post{color:#fff;background-color:#348c34}.action h4.action-heading .method.delete{color:#fff;background-color:#ce1a15}.action h4.action-heading code{display:none}.action dl.inner{overflow:auto;margin:0;padding:20px 0}.action .title{border-bottom:1px solid #FFF;margin:0 -12px -1px -12px;padding:12px}.action dt{overflow:initial;width:90px;text-align:left;text-overflow:initial;white-space:initial;word-wrap:break-word}.action dd{display:flex;flex-wrap:nowrap;justify-content:flex-start;align-items:stretch;height:auto;margin-left:0}.action dd>code{padding:0;border:none;background:none;font:inherit;text-transform:capitalize;color:inherit}.action dd>code+span{order:-1;display:block;width:10px;height:10px;margin:7px 10px 0 0;background-position:30px 0;background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAxMCI+PHBhdGggZmlsbD0iIzVENjU3NyIgZD0iTTUgMmMxLjY1NCAwIDMgMS4zNDYgMyAzUzYuNjU0IDggNSA4IDIgNi42NTQgMiA1czEuMzQ2LTMgMy0zbTAtMmE1IDUgMCAxIDAgLjAwMSAxMC4wMDFBNSA1IDAgMCAwIDUgMHoiLz48cGF0aCBmaWxsPSIjQzFDNkQxIiBkPSJNMTUgMmMxLjY1NCAwIDMgMS4zNDYgMyAzcy0xLjM0NiAzLTMgMy0zLTEuMzQ2LTMtMyAxLjM0Ni0zIDMtM20wLTJhNSA1IDAgMSAwIC4wMDEgMTAuMDAxQTUgNSAwIDAgMCAxNSAweiIvPjxjaXJjbGUgZmlsbD0iIzk1OUNBRCIgY3g9IjI1IiBjeT0iNSIgcj0iNSIvPjwvc3ZnPg==);background-size:30px 10px;font-size:3px;color:transparent;pointer-events:none;user-select:none}.action dd .required{background-position:10px 0;background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAxMCI+PHBhdGggZmlsbD0iIzVENjU3NyIgZD0iTTUgMmMxLjY1NCAwIDMgMS4zNDYgMyAzUzYuNjU0IDggNSA4IDIgNi42NTQgMiA1czEuMzQ2LTMgMy0zbTAtMmE1IDUgMCAxIDAgLjAwMSAxMC4wMDFBNSA1IDAgMCAwIDUgMHoiLz48cGF0aCBmaWxsPSIjQzFDNkQxIiBkPSJNMTUgMmMxLjY1NCAwIDMgMS4zNDYgMyAzcy0xLjM0NiAzLTMgMy0zLTEuMzQ2LTMtMyAxLjM0Ni0zIDMtM20wLTJhNSA1IDAgMSAwIC4wMDEgMTAuMDAxQTUgNSAwIDAgMCAxNSAweiIvPjxjaXJjbGUgZmlsbD0iIzk1OUNBRCIgY3g9IjI1IiBjeT0iNSIgcj0iNSIvPjwvc3ZnPg==)}.action dd .example{display:none}.middle>p.text-muted{display:none}</style></head><body class="preload"><a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container"><div class="row"><nav><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#judge">Judge</a></div><div class="collapse-content"><ul><li><a href="#judge-submission">Submission</a><ul><li><a href="#judge-submission-post"><span class="badge post"><i class="fa fa-plus"></i></span>Submit</a></li></ul></li><li><a href="#judge-status">Status</a><ul><li><a href="#judge-status-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Status</a></li></ul></li><li><a href="#judge-testcases">Testcases</a><ul><li><a href="#judge-testcases-put"><span class="badge put"><i class="fa fa-pencil"></i></span>Testcase</a></li></ul></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#settings">Settings</a></div><div class="collapse-content"><ul><li><a href="#settings-tokens">Tokens</a><ul><li><a href="#settings-tokens-post"><span class="badge post"><i class="fa fa-plus"></i></span>Token</a></li></ul></li><li><a href="#settings-info">Info</a><ul><li><a href="#settings-info-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Info</a></li></ul></li><li><a href="#settings-settings">Settings</a><ul><li><a href="#settings-settings-post"><span class="badge post"><i class="fa fa-plus"></i></span>Change API settings</a></li></ul></li></ul></div></div></nav><div class="content"><header><h1 id="top">Code Judge & testing API</h1></header><p>Execute, judge and evaluate code in an isolated enviroment</p>
-<section id="judge" class="resource-group"><h2 class="group-heading">Judge <a href="#judge" class="permalink">&para;</a></h2><div id="judge-submission" class="resource"><h3 class="resource-heading">Submission <a href="#judge-submission" class="permalink">&nbsp;&para;</a></h3><p>Send code for evaluation and judgeing process.
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Code Judge &amp; testing API</title><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><style>@import url('https://fonts.googleapis.com/css?family=Roboto:400,700|Inconsolata|Raleway:200');.hljs-comment,.hljs-title{color:#8e908c}.hljs-variable,.hljs-attribute,.hljs-tag,.hljs-regexp,.ruby .hljs-constant,.xml .hljs-tag .hljs-title,.xml .hljs-pi,.xml .hljs-doctype,.html .hljs-doctype,.css .hljs-id,.css .hljs-class,.css .hljs-pseudo{color:#c82829}.hljs-number,.hljs-preprocessor,.hljs-pragma,.hljs-built_in,.hljs-literal,.hljs-params,.hljs-constant{color:#f5871f}.ruby .hljs-class .hljs-title,.css .hljs-rules .hljs-attribute{color:#eab700}.hljs-string,.hljs-value,.hljs-inheritance,.hljs-header,.ruby .hljs-symbol,.xml .hljs-cdata{color:#718c00}.css .hljs-hexcolor{color:#3e999f}.hljs-function,.python .hljs-decorator,.python .hljs-title,.ruby .hljs-function .hljs-title,.ruby .hljs-title .hljs-keyword,.perl .hljs-sub,.javascript .hljs-title,.coffeescript .hljs-title{color:#4271ae}.hljs-keyword,.javascript .hljs-function{color:#8959a8}.hljs{display:block;background:white;color:#4d4d4c;padding:.5em}.coffeescript .javascript,.javascript .xml,.tex .hljs-formula,.xml .javascript,.xml .vbscript,.xml .css,.xml .hljs-cdata{opacity:.5}.right .hljs-comment{color:#969896}.right .css .hljs-class,.right .css .hljs-id,.right .css .hljs-pseudo,.right .hljs-attribute,.right .hljs-regexp,.right .hljs-tag,.right .hljs-variable,.right .html .hljs-doctype,.right .ruby .hljs-constant,.right .xml .hljs-doctype,.right .xml .hljs-pi,.right .xml .hljs-tag .hljs-title{color:#c66}.right .hljs-built_in,.right .hljs-constant,.right .hljs-literal,.right .hljs-number,.right .hljs-params,.right .hljs-pragma,.right .hljs-preprocessor{color:#de935f}.right .css .hljs-rule .hljs-attribute,.right .ruby .hljs-class .hljs-title{color:#f0c674}.right .hljs-header,.right .hljs-inheritance,.right .hljs-name,.right .hljs-string,.right .hljs-value,.right .ruby .hljs-symbol,.right .xml .hljs-cdata{color:#b5bd68}.right .css .hljs-hexcolor,.right .hljs-title{color:#8abeb7}.right .coffeescript .hljs-title,.right .hljs-function,.right .javascript .hljs-title,.right .perl .hljs-sub,.right .python .hljs-decorator,.right .python .hljs-title,.right .ruby .hljs-function .hljs-title,.right .ruby .hljs-title .hljs-keyword{color:#81a2be}.right .hljs-keyword,.right .javascript .hljs-function{color:#b294bb}.right .hljs{display:block;overflow-x:auto;background:#1d1f21;color:#c5c8c6;padding:.5em;-webkit-text-size-adjust:none}.right .coffeescript .javascript,.right .javascript .xml,.right .tex .hljs-formula,.right .xml .css,.right .xml .hljs-cdata,.right .xml .javascript,.right .xml .vbscript{opacity:.5}body{color:black;background:white;font:400 14px / 1.42 'Roboto',Helvetica,sans-serif}header{border-bottom:1px solid #ededed;margin-bottom:12px}h1,h2,h3,h4,h5{color:black;margin:12px 0}h1 .permalink,h2 .permalink,h3 .permalink,h4 .permalink,h5 .permalink{margin-left:0;opacity:0;transition:opacity .25s ease}h1:hover .permalink,h2:hover .permalink,h3:hover .permalink,h4:hover .permalink,h5:hover .permalink{opacity:1}.triple h1 .permalink,.triple h2 .permalink,.triple h3 .permalink,.triple h4 .permalink,.triple h5 .permalink{opacity:.15}.triple h1:hover .permalink,.triple h2:hover .permalink,.triple h3:hover .permalink,.triple h4:hover .permalink,.triple h5:hover .permalink{opacity:.15}h1{font:200 36px 'Raleway',Helvetica,sans-serif;font-size:36px}h2{font:200 36px 'Raleway',Helvetica,sans-serif;font-size:30px}h3{font-size:100%;text-transform:uppercase}h5{font-size:100%;font-weight:normal}p{margin:0 0 10px}p.choices{line-height:1.6}a{color:#18bc9c;text-decoration:none}li p{margin:0}hr.split{border:0;height:1px;width:100%;padding-left:6px;margin:12px auto;background-image:linear-gradient(to right, rgba(0,0,0,0) 20%, rgba(0,0,0,0.2) 51.4%, rgba(255,255,255,0.2) 51.4%, rgba(255,255,255,0) 80%)}dl dt{float:left;width:130px;clear:left;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}dl dd{margin-left:150px}blockquote{color:rgba(0,0,0,0.5);font-size:15.5px;padding:10px 20px;margin:12px 0;border-left:5px solid #e8e8e8}blockquote p:last-child{margin-bottom:0}pre{background-color:#f5f5f5;padding:12px;border:1px solid #cfcfcf;border-radius:6px;overflow:auto}pre code{color:black;background-color:transparent;padding:0;border:none}code{color:#444;background-color:#f5f5f5;font:'Inconsolata',monospace;padding:1px 4px;border:1px solid #cfcfcf;border-radius:3px}ul,ol{padding-left:2em}table{border-collapse:collapse;border-spacing:0;margin-bottom:12px}table tr:nth-child(2n){background-color:#fafafa}table th,table td{padding:6px 12px;border:1px solid #e6e6e6}.text-muted{opacity:.5}.note,.warning{padding:.3em 1em;margin:1em 0;border-radius:2px;font-size:90%}.note h1,.warning h1,.note h2,.warning h2,.note h3,.warning h3,.note h4,.warning h4,.note h5,.warning h5,.note h6,.warning h6{font-family:200 36px 'Raleway',Helvetica,sans-serif;font-size:135%;font-weight:500}.note p,.warning p{margin:.5em 0}.note{color:black;background-color:#eff7fc;border-left:4px solid #3498db}.note h1,.note h2,.note h3,.note h4,.note h5,.note h6{color:#3498db}.warning{color:black;background-color:#fcf0ef;border-left:4px solid #d62c1a}.warning h1,.warning h2,.warning h3,.warning h4,.warning h5,.warning h6{color:#d62c1a}header{margin-top:24px}nav{position:fixed;top:24px;bottom:0;overflow-y:auto}nav .resource-group{padding:0}nav .resource-group .heading{position:relative}nav .resource-group .heading .chevron{position:absolute;top:12px;right:12px;opacity:.5}nav .resource-group .heading a{display:block;color:black;opacity:.7;border-left:2px solid transparent;margin:0}nav .resource-group .heading a:hover{text-decoration:none;background-color:bad-color;border-left:2px solid black}nav ul{list-style-type:none;padding-left:0}nav ul a{display:block;font-size:13px;color:rgba(0,0,0,0.7);padding:8px 12px;border-top:1px solid #ededed;border-left:2px solid transparent;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}nav ul a:hover{text-decoration:none;background-color:bad-color;border-left:2px solid black}nav ul>li{margin:0}nav ul>li:first-child{margin-top:-12px}nav ul>li:last-child{margin-bottom:-12px}nav ul ul a{padding-left:24px}nav ul ul li{margin:0}nav ul ul li:first-child{margin-top:0}nav ul ul li:last-child{margin-bottom:0}nav>div>div>ul>li:first-child>a{border-top:none}.preload *{transition:none !important}.pull-left{float:left}.pull-right{float:right}.badge{display:inline-block;float:right;min-width:10px;min-height:14px;padding:3px 7px;font-size:12px;color:#000;background-color:#ededed;border-radius:10px;margin:-2px 0}.badge.get{color:white;background-color:#3498db}.badge.head{color:white;background-color:#3498db}.badge.options{color:white;background-color:#3498db}.badge.put{color:white;background-color:#f39c12}.badge.patch{color:white;background-color:#f39c12}.badge.post{color:white;background-color:#18bc9c}.badge.delete{color:white;background-color:#e74c3c}.collapse-button{float:right}.collapse-button .close{display:none;color:#18bc9c;cursor:pointer}.collapse-button .open{color:#18bc9c;cursor:pointer}.collapse-button.show .close{display:inline}.collapse-button.show .open{display:none}.collapse-content{max-height:0;overflow:hidden;transition:max-height .3s ease-in-out}nav{width:220px}.container{max-width:940px;margin-left:auto;margin-right:auto}.container .row .content{margin-left:244px;width:696px}.container .row:after{content:'';display:block;clear:both}.container-fluid nav{width:22%}.container-fluid .row .content{margin-left:24%}.container-fluid.triple nav{width:16.5%;padding-right:1px}.container-fluid.triple .row .content{position:relative;margin-left:16.5%;padding-left:24px}.middle:before,.middle:after{content:'';display:table}.middle:after{clear:both}.middle{box-sizing:border-box;width:51.5%;padding-right:12px}.right{box-sizing:border-box;float:right;width:48.5%;padding-left:12px}.right a{color:#18bc9c}.right h1,.right h2,.right h3,.right h4,.right h5,.right p,.right div{color:white}.right pre{background-color:#1d1f21;border:1px solid #1d1f21}.right pre code{color:#c5c8c6}.right .description{margin-top:12px}.triple .resource-heading{font-size:125%}.definition{margin-top:12px;margin-bottom:12px}.definition .method{font-weight:bold}.definition .method.get{color:#2e80b8}.definition .method.head{color:#2e80b8}.definition .method.options{color:#2e80b8}.definition .method.post{color:#2eb89d}.definition .method.put{color:#b8822e}.definition .method.patch{color:#b8822e}.definition .method.delete{color:#b83b2e}.definition .uri{word-break:break-all;word-wrap:break-word}.definition .hostname{opacity:.5}.example-names{background-color:#eee;padding:12px;border-radius:6px}.example-names .tab-button{cursor:pointer;color:black;border:1px solid #ddd;padding:6px;margin-left:12px}.example-names .tab-button.active{background-color:#d5d5d5}.right .example-names{background-color:#444}.right .example-names .tab-button{color:white;border:1px solid #666;border-radius:6px}.right .example-names .tab-button.active{background-color:#5e5e5e}#nav-background{position:fixed;left:0;top:0;bottom:0;width:16.5%;padding-right:14.4px;background-color:#fbfbfb;border-right:1px solid #f0f0f0;z-index:-1}#right-panel-background{position:absolute;right:-12px;top:-12px;bottom:-12px;width:48.6%;background-color:#333;z-index:-1}@media (max-width:1200px){nav{width:198px}.container{max-width:840px}.container .row .content{margin-left:224px;width:606px}}@media (max-width:992px){nav{width:169.4px}.container{max-width:720px}.container .row .content{margin-left:194px;width:526px}}@media (max-width:768px){nav{display:none}.container{width:95%;max-width:none}.container .row .content,.container-fluid .row .content,.container-fluid.triple .row .content{margin-left:auto;margin-right:auto;width:95%}#nav-background{display:none}#right-panel-background{width:48.6%}}.back-to-top{position:fixed;z-index:1;bottom:0;right:24px;padding:4px 8px;color:rgba(0,0,0,0.5);background-color:#ededed;text-decoration:none !important;border-top:1px solid #ededed;border-left:1px solid #ededed;border-right:1px solid #ededed;border-top-left-radius:3px;border-top-right-radius:3px}.resource-group{padding:12px;margin-bottom:12px;background-color:white;border:1px solid #ededed;border-radius:6px}.resource-group h2.group-heading,.resource-group .heading a{padding:12px;margin:-12px -12px 12px -12px;background-color:#ededed;border-bottom:1px solid #ededed;border-top-left-radius:6px;border-top-right-radius:6px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.triple .content .resource-group{padding:0;border:none}.triple .content .resource-group h2.group-heading,.triple .content .resource-group .heading a{margin:0 0 12px 0;border:1px solid #ededed}nav .resource-group .heading a{padding:12px;margin-bottom:0}nav .resource-group .collapse-content{padding:0}.action{margin-bottom:12px;padding:12px 12px 0 12px;overflow:hidden;border:1px solid transparent;border-radius:6px}.action h4.action-heading{padding:6px 12px;margin:-12px -12px 12px -12px;border-bottom:1px solid transparent;border-top-left-radius:6px;border-top-right-radius:6px;overflow:hidden}.action h4.action-heading .name{float:right;font-weight:normal;padding:6px 0}.action h4.action-heading .method{padding:6px 12px;margin-right:12px;border-radius:3px;display:inline-block}.action h4.action-heading .method.get{color:#000;background-color:white}.action h4.action-heading .method.head{color:#000;background-color:white}.action h4.action-heading .method.options{color:#000;background-color:white}.action h4.action-heading .method.put{color:#000;background-color:white}.action h4.action-heading .method.patch{color:#000;background-color:white}.action h4.action-heading .method.post{color:#000;background-color:white}.action h4.action-heading .method.delete{color:#000;background-color:white}.action h4.action-heading code{color:#444;background-color:rgba(255,255,255,0.7);border-color:transparent;font-weight:normal;word-break:break-all;display:inline-block;margin-top:2px}.action dl.inner{padding-bottom:2px}.action .title{border-bottom:1px solid white;margin:0 -12px -1px -12px;padding:12px}.action.get{border-color:#3498db}.action.get h4.action-heading{color:white;background:#3498db;border-bottom-color:#3498db}.action.head{border-color:#3498db}.action.head h4.action-heading{color:white;background:#3498db;border-bottom-color:#3498db}.action.options{border-color:#3498db}.action.options h4.action-heading{color:white;background:#3498db;border-bottom-color:#3498db}.action.post{border-color:#18bc9c}.action.post h4.action-heading{color:white;background:#18bc9c;border-bottom-color:#18bc9c}.action.put{border-color:#f39c12}.action.put h4.action-heading{color:white;background:#f39c12;border-bottom-color:#f39c12}.action.patch{border-color:#f39c12}.action.patch h4.action-heading{color:white;background:#f39c12;border-bottom-color:#f39c12}.action.delete{border-color:#e74c3c}.action.delete h4.action-heading{color:white;background:#e74c3c;border-bottom-color:#e74c3c}</style></head><body class="preload"><a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container-fluid"><div class="row"><nav><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#top">Overview</a></div><div class="collapse-content"><ul><li><a href="#header-mat-judge-overview">Mat-judge overview</a></li><li><a href="#header-authorization">Authorization</a></li><li><a href="#header-instalation">Instalation</a></li><li><a href="#header-development">Development</a></li><li><a href="#header-few-notes">Few notes</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#judge">Judge</a></div><div class="collapse-content"><ul><li><a href="#judge-submission-post"><span class="badge post"><i class="fa fa-plus"></i></span>Submiting Code</a></li><li><a href="#judge-status-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Submission Status</a></li><li><a href="#judge-grader-script-specifications">Grader Script Specifications</a><ul></ul></li><li><a href="#judge-testcases-put"><span class="badge put"><i class="fa fa-pencil"></i></span>Store testcases</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#settings">Settings</a></div><div class="collapse-content"><ul><li><a href="#settings-tokens">Tokens</a><ul><li><a href="#settings-tokens-post"><span class="badge post"><i class="fa fa-plus"></i></span>Create a new Token</a></li><li><a href="#settings-tokens-delete"><span class="badge delete"><i class="fa fa-times"></i></span>Delete token</a></li><li><a href="#settings-tokens-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Token information</a></li></ul></li><li><a href="#settings-info-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Mat-judge information</a></li><li><a href="#settings-settings-post"><span class="badge post"><i class="fa fa-plus"></i></span>Change API settings</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#examples">Examples</a></div><div class="collapse-content"><ul><li><a href="#header-submitting-code">Submitting code</a></li><li><a href="#header-checking-the-submission-status">Checking the submission status</a></li><li><a href="#header-uploading-a-testcase">Uploading a testcase</a></li><li><a href="#header-using-custom-grader-script">Using custom grader script</a></li></ul></div></div><p style="text-align: center; word-wrap: break-word;"><a href="http://localhost:5000/api/v0">http://localhost:5000/api/v0</a></p></nav><div class="content"><header><h1 id="top">Code Judge & testing API</h1></header><p>Execute, judge and evaluate code in an isolated secure enviroment.</p>
+<h2 id="header-mat-judge-overview">Mat-judge overview <a class="permalink" href="#header-mat-judge-overview" aria-hidden="true">¶</a></h2>
+<p>Mat-judge is an open source online judging system. It executes and evaluates code based on specified parameters. With easy installation, you can integrate it into your application in no time 🚀</p>
+<p>Features include:</p>
+<ul>
+<li>
+<p>Isolated code execution</p>
+</li>
+<li>
+<p>Runtime limit</p>
+</li>
+<li>
+<p>Memory usage limit</p>
+</li>
+<li>
+<p>10 languages support</p>
+</li>
+<li>
+<p><a href="/#header-authorization">Token Authorization</a></p>
+</li>
+<li>
+<p>Worker resource distribution</p>
+</li>
+<li>
+<p>SQLite data storage</p>
+</li>
+<li>
+<p>Fast flask API response</p>
+</li>
+<li>
+<p>Full submission report</p>
+</li>
+<li>
+<p>Passive submissions</p>
+</li>
+<li>
+<p>Clientside/Serverside usage</p>
+</li>
+<li>
+<p>Request limitations and overhead management</p>
+</li>
+</ul>
+<h2 id="header-authorization">Authorization <a class="permalink" href="#header-authorization" aria-hidden="true">¶</a></h2>
+<p>Token Authorization can be turned off/on through <a href="/#settings-settings-post">settings</a> api call, the status of which can be viewed by <a href="/#settings-info-get">info request</a>.</p>
+<p>Tokens have following properties:</p>
+<ul>
+<li>
+<p>owner</p>
+</li>
+<li>
+<p>access_level</p>
+</li>
+<li>
+<p>expiration</p>
+</li>
+</ul>
+<p>Access level is described by an integer value:</p>
+<ul>
+<li>
+<p>4 - public <em>(status request)</em></p>
+</li>
+<li>
+<p>3 - user <em>(submit request)</em></p>
+</li>
+<li>
+<p>2 - moderator <em>(testcases request)</em></p>
+</li>
+<li>
+<p>1 - administrator <em>(token &amp; settings managment requests)</em></p>
+</li>
+</ul>
+<div class="note">
+<p>Tokens with higher permission levels have access to everything lower levels do.</p>
+<p>Example: <em>User</em> (3) can both do <em>submit</em> and <em>status</em> requests.</p>
+</div>
+<p>Expiration is provided upon creation of tokens. Once expired, token becomes invalid.</p>
+<h2 id="header-instalation">Instalation <a class="permalink" href="#header-instalation" aria-hidden="true">¶</a></h2>
+<p>Since this is built with pure python3.6, without any additional modules (except flask), you can run it on Windows, Linux or Mac. Assuming you have python 3.x and pip3 installed:</p>
+<ul>
+<li>
+<p>Download or clone mat-judge <a href="">github</a> repo.</p>
+</li>
+<li>
+<p>install flask module for python3</p>
+<ul>
+<li><code>pip3 install flask</code></li>
+</ul>
+</li>
+<li>
+<p>Run the api</p>
+<ul>
+<li><code>python3 api.py</code></li>
+</ul>
+</li>
+</ul>
+<p>You’re all set!</p>
+<p>You can run <code>pytho3 api.py --help</code> to view command-line options for api.</p>
+<p>By default, if you’re running Linux, a single worker module will be spawned. You can take advantage of the <em>worker distribution</em> feature and run multiple workers on different machines, expanding resources and increasing maximum workload. This is recommended (and easily done) by opening an ssh tunnel and securely connecting the worker to the API.</p>
+<h2 id="header-development">Development <a class="permalink" href="#header-development" aria-hidden="true">¶</a></h2>
+<p>Current version is <strong>V1.1</strong>, 25.09.2020.</p>
+<p>Developed by <em>Stevo Mitric</em>, Software Engineering student at ETF, Belgrade. <em><a href="mailto:stevomitric2000@gmail.com">stevomitric2000@gmail.com</a></em></p>
+<p>Project code name: <em>Mat-judge</em></p>
+<div class="note">
+<h2 id="header-few-notes">Few notes <a class="permalink" href="#header-few-notes" aria-hidden="true">¶</a></h2>
+<ul>
+<li>
+<p>Requests with <em>body</em> can be sent in any format. (<code>application/x-www-form-urlencoded</code>, <code>application/form-data</code> or <code>application/json</code>)</p>
+</li>
+<li>
+<p>All successful calls to the API response with <code>200</code> status code.</p>
+</li>
+<li>
+<p><code>success</code> field determines whether that request was processed successfully or not.</p>
+</li>
+<li>
+<p>If <code>token_access</code> is turned on, you’ll need to provide <code>token</code> field (in the <em>body</em> of the request) with valid permission level for that request.</p>
+</li>
+</ul>
+</div>
+<section id="judge" class="resource-group"><h2 class="group-heading">Judge <a href="#judge" class="permalink">&para;</a></h2><div id="judge-submission" class="resource"><h3 class="resource-heading">Submission <a href="#judge-submission" class="permalink">&nbsp;&para;</a></h3><p>Send code for evaluation and judging process.
 <em>Access level 3 (user)</em></p>
-<div id="judge-submission-post" class="action post"><h4 class="action-heading"><div class="name">Submit</div><a href="#judge-submission-post" class="method post">POST</a><code class="uri">/submit</code></h4><h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname">http://localhost:5000/api/v0</span>/submit</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>code</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Code to be executed</p>
-</dd><dt>language</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Language short id</p>
-<p class="choices"><strong>Choices:&nbsp;</strong><code>c++11</code> <code>c++14</code> <code>c++17</code> <code>c11</code> <code>py3</code> </p></dd><dt>time_limit</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<p>Time limit in <strong>miliseconds</strong>.
-Must be =&gt; 100 and &lt;= 15000</p>
+<div class="note">
+<h2 id="header-note">Note <a class="permalink" href="#header-note" aria-hidden="true">¶</a></h2>
+<p>You should pass either <em>testcases</em> or <em>testcases_id</em> field.</p>
+</div>
+<div class="note">
+<h2 id="header-passive-submissions">Passive submissions <a class="permalink" href="#header-passive-submissions" aria-hidden="true">¶</a></h2>
+<ul>
+<li>
+<p><em>Passive submissions</em> are meant to judge code on an already set specifications.</p>
+</li>
+<li>
+<p>They are <strong>off</strong> by default.</p>
+</li>
+<li>
+<p>Once turned on (by <a href="/#settings-settings-post">settings</a> request), they will only accept fields: <code>code</code>, <code>language</code>, <code>testcases_id</code>.</p>
+</li>
+<li>
+<p>Passive submissions are used if the API is served to the users <em>directly</em>.</p>
+</li>
+</ul>
+</div>
+<div id="judge-submission-post" class="action post"><h4 class="action-heading"><div class="name">Submiting Code</div><a href="#judge-submission-post" class="method post">POST</a><code class="uri">/submit</code></h4><h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname">http://localhost:5000/api/v0</span>/submit</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>code</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Code to be executed</p>
+</dd><dt>language</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Language identifier (get available languages by <a href="">info request</a>)</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>c++11</code> <code>c++14</code> <code>c++17</code> <code>c11</code> <code>py3</code> </p></dd><dt>time_limit</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<p>Time limit in <strong>milliseconds</strong>.
+Must be <em>&gt; 100 and &lt; 15000</em></p>
 <ul>
 <li>default 1000</li>
 </ul>
 </dd><dt>memory_limit</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<p>Memory limit in <strong>MB</strong>
-Must be =&gt; 4 and &lt;= 256</p>
+Must be <em>&gt; 4 and &lt; 257</em></p>
 <ul>
 <li>default 256</li>
 </ul>
 </dd><dt>testcases</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<p>List of tuples.
-Tuple values are <strong>strings</strong>. First value is input passed to the program, and second value is expected output.</p>
+Tuple values are <strong>strings</strong>. Thre first value in tuple is input passed to the program, and the second value is expected output.</p>
 </dd><dt>testcases_id</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<p>ID of stored testcases</p>
 </dd><dt>grader</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<p>Grader script to judge AC/WA based on programs &amp; expected outputs.
 See Grader script information for more details and required format.</p>
-</dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">multipart/form-data</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
-        "code": '#include &lt;iostream&gt;
-                 int main() {
-                     std::cout &lt;&lt; "Hello World!";
-                     return 0;
-                 }',
-        "language": "c++11",
-        "time_limit": 1000,
-        "memory_limit": 1000,
-        "testcases": [ ("1 2", "3"),  ("-10 7", "-3"), ("10 11", "21") ]
-    }</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+</dd></dl></div><div class="title"><strong>Request&nbsp;&nbsp;<code>Simple code submissions</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Body</h5><pre><code>{
+    "code": '#include &lt;iostream&gt;
+                int main() {
+                    std::cout &lt;&lt; "Hello World!";
+                    return 0;
+                }',
+    "language": "c++11",
+    "time_limit": 1000,
+    "memory_limit": 1000,
+    "testcases": [ ("1 2", "3"),  ("-10 7", "-3"), ("10 11", "21") ]
+}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Body</h5><pre><code>{
     "<span class="hljs-attribute">success</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
     "<span class="hljs-attribute">submission_id</span>": <span class="hljs-value"><span class="hljs-number">51</span></span>,
-}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>If token access has been turned on, ‘token’ parameter must be specified in <strong>body</strong> of the request.</p>
-</div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>If token access has been turned on, ‘token’ parameter must be specified in the <strong>body</strong> of the request.</p>
+</div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">success</span>": <span class="hljs-value"><span class="hljs-literal">false</span></span>,
   "<span class="hljs-attribute">error</span>": <span class="hljs-value"><span class="hljs-string">"Token must be specified"</span>
 </span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="judge-status" class="resource"><h3 class="resource-heading">Status <a href="#judge-status" class="permalink">&nbsp;&para;</a></h3><p>Fetch status of a submission. <em>Access level 4 (public)</em></p>
-<div id="judge-status-get" class="action get"><h4 class="action-heading"><div class="name">Status</div><a href="#judge-status-get" class="method get">GET</a><code class="uri">/status?submission_id={submission_id}</code></h4><h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://localhost:5000/api/v0</span>/status?submission_id=<span class="hljs-attribute" title="submission_id">submission_id</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>submission_id</dt><dd><code>number</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Submission identifier</p>
-</dd><dt>output</dt><dd><code>bool</code>&nbsp;<span>(optional)</span>&nbsp;<p>Wheter to return output or not</p>
+<div id="judge-status-get" class="action get"><h4 class="action-heading"><div class="name">Submission Status</div><a href="#judge-status-get" class="method get">GET</a><code class="uri">/status?submission_id={submission_id}</code></h4><h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://localhost:5000/api/v0</span>/status?submission_id=<span class="hljs-attribute" title="submission_id">submission_id</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>submission_id</dt><dd><code>number</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Submission identifier</p>
+</dd><dt>output</dt><dd><code>bool</code>&nbsp;<span>(optional)</span>&nbsp;<p>Whether to return the output or not</p>
 <ul>
 <li>default false</li>
 </ul>
-</dd></dl></div><div class="title"><strong>Request&nbsp;&nbsp;<code>/status?submission_id=154</code></strong></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>If the submission has been fully judged.  <em>code</em> Field can have following responses: <strong>AC</strong> (Accepted), <strong>WA</strong> (Wrong answer), <strong>RE</strong> (Runtime Error), <strong>CE</strong> (Compile Error), <strong>TLE</strong> (Time Limit Exceded), <strong>MLE</strong> (Memory Limit Exceded)</p>
-</div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
-    <span class="hljs-string">"success"</span>: <span class="hljs-literal">true</span>,
-    <span class="hljs-string">"code"</span>: <span class="hljs-string">"AC"</span>,
-    <span class="hljs-string">'run_time'</span>: <span class="hljs-number">250</span>,
-    <span class="hljs-string">'running'</span>: <span class="hljs-literal">false</span>,
-    <span class="hljs-string">'judged'</span>: <span class="hljs-number">100</span>,
-}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>If the submission runs into <strong>CE</strong>, <em>compiler</em> filed will be provided</p>
-</div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
-  "<span class="hljs-attribute">success</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
-  "<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-string">"CE"</span></span>,
+</dd></dl></div><div class="title"><strong>Request&nbsp;&nbsp;<code>/status?submission_id=154</code></strong></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>If the submission has been fully judged, <code>code</code> field can have the following responses: <strong>AC</strong> (Accepted), <strong>WA</strong> (Wrong answer), <strong>RE</strong> (Runtime Error), <strong>CE</strong> (Compile Error), <strong>TLE</strong> (Time Limit Exceeded), <strong>MLE</strong> (Memory Limit Exceeded)</p>
+</div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-string">"AC"</span></span>,
+  "<span class="hljs-attribute">judged</span>": <span class="hljs-value"><span class="hljs-number">33</span></span>,
+  "<span class="hljs-attribute">run_time</span>": <span class="hljs-value"><span class="hljs-number">131</span></span>,
   "<span class="hljs-attribute">running</span>": <span class="hljs-value"><span class="hljs-literal">false</span></span>,
-  "<span class="hljs-attribute">Compiler</span>": <span class="hljs-value"><span class="hljs-string">"Undefined xxx"</span>
-</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>If the submission is running, <em>judged</em> filed will point out how many testcases have been judged so far</p>
-</div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">success</span>": <span class="hljs-value"><span class="hljs-literal">true</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>If the submission runs into <strong>CE</strong>, <em>error</em> field will be provided with the explanation.</p>
+</div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-string">"CE"</span></span>,
+  "<span class="hljs-attribute">error</span>": <span class="hljs-value"><span class="hljs-string">"sandbox/7512331/main.cpp: In function ‘int main()’:\nsandbox/7512331/main.cpp:4:7: error: expected initializer before ‘b’\n int a b;\n       ^\nsandbox/7512331/main.cpp:5:8: error: ‘a’ was not declared in this scope\n cin &gt;&gt; a &gt;&gt; b;\n        ^\nsandbox/7512331/main.cpp:5:13: error: ‘b’ was not declared in this scope\n cin &gt;&gt; a &gt;&gt; b;\n             ^\n"</span></span>,
+  "<span class="hljs-attribute">judged</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">running</span>": <span class="hljs-value"><span class="hljs-literal">false</span></span>,
+  "<span class="hljs-attribute">success</span>": <span class="hljs-value"><span class="hljs-literal">true</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>If the submission is running, <em>judged</em> field will point out how many testcases have been judged so far.</p>
+</div><h5>Body</h5><pre><code>{
     "<span class="hljs-attribute">success</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
     "<span class="hljs-attribute">running</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
     "<span class="hljs-attribute">judged</span>": <span class="hljs-value"><span class="hljs-number">24</span></span>,
-}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>If the invalid submission_id has been provided</p>
-</div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>If an invalid <code>submission_id</code> has been provided:</p>
+</div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">success</span>": <span class="hljs-value"><span class="hljs-literal">false</span></span>,
   "<span class="hljs-attribute">error</span>": <span class="hljs-value"><span class="hljs-string">"Invalid submission ID"</span>
-</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Request&nbsp;&nbsp;<code>/status?submission_id=154&amp;output=True</code></strong></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>If the output parameter is set to True</p>
-</div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
-    <span class="hljs-string">"success"</span>: <span class="hljs-literal">true</span>,
-    <span class="hljs-string">"code"</span>: <span class="hljs-string">"AC"</span>,
-    <span class="hljs-string">'run_time'</span>: <span class="hljs-number">250</span>,
-    <span class="hljs-string">'running'</span>: <span class="hljs-literal">false</span>,
-    <span class="hljs-string">'judged'</span>: <span class="hljs-number">100</span>,
-    <span class="hljs-string">'output'</span>: [
-        [<span class="hljs-string">''</span>, <span class="hljs-string">''</span>, <span class="hljs-string">''</span>, <span class="hljs-string">''</span>]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Request&nbsp;&nbsp;<code>/status?submission_id=154&amp;output=True</code></strong></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>If the output parameter is set to <code>True</code>, output field in the response will be a list of lists. Each list corresponds to one testcase, and is formated by: <code>[code, run_time, prog_output, judge_verdict]</code></p>
+</div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-string">"AC"</span></span>,
+  "<span class="hljs-attribute">judged</span>": <span class="hljs-value"><span class="hljs-number">3</span></span>,
+  "<span class="hljs-attribute">output</span>": <span class="hljs-value">[
+    [
+      <span class="hljs-string">"AC"</span>,
+      <span class="hljs-string">"1"</span>,
+      <span class="hljs-string">"2\n"</span>,
+      <span class="hljs-string">"OK"</span>
+    ],
+    [
+      <span class="hljs-string">"AC"</span>,
+      <span class="hljs-string">"1"</span>,
+      <span class="hljs-string">"4\n"</span>,
+      <span class="hljs-string">"OK"</span>
+    ],
+    [
+      <span class="hljs-string">"AC"</span>,
+      <span class="hljs-string">"1"</span>,
+      <span class="hljs-string">"-3\n"</span>,
+      <span class="hljs-string">"OK"</span>
     ]
-}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="judge-testcases" class="resource"><h3 class="resource-heading">Testcases <a href="#judge-testcases" class="permalink">&nbsp;&para;</a></h3><p>Preupload a testcase. <em>Access level 2 (moderator)</em></p>
-<div id="judge-testcases-put" class="action put"><h4 class="action-heading"><div class="name">Testcase</div><a href="#judge-testcases-put" class="method put">PUT</a><code class="uri">/testcases</code></h4><h4>Example URI</h4><div class="definition"><span class="method put">PUT</span>&nbsp;<span class="uri"><span class="hostname">http://localhost:5000/api/v0</span>/testcases</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>testcases</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>List of tuples</p>
+  ]</span>,
+  "<span class="hljs-attribute">run_time</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+  "<span class="hljs-attribute">running</span>": <span class="hljs-value"><span class="hljs-literal">false</span></span>,
+  "<span class="hljs-attribute">success</span>": <span class="hljs-value"><span class="hljs-literal">true</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="judge-grader-script-specifications" class="resource"><h3 class="resource-heading">Grader Script Specifications <a href="#judge-grader-script-specifications" class="permalink">&nbsp;&para;</a></h3><p>Grader script is called when the following criteria are met:</p>
+<ul>
+<li>
+<p>Code compiled successfully</p>
+</li>
+<li>
+<p>Program executed within the time and memory limits</p>
+</li>
+</ul>
+<p>Grader script should follow these rules:</p>
+<ul>
+<li>
+<p>Is compatible with mat-judge python3 version</p>
+</li>
+<li>
+<p>Has function <code>judge(input, output, prog_output)</code>, each argument is a string.</p>
+</li>
+<li>
+<p>Returns <code>(state, msg)</code>, where the state is <code>True</code>/<code>False</code> indicating ‘AC’ or ‘WA’, and msg is the grader verdict (can be “OK”, “passed”, “String mismatch at position x”, etc.)</p>
+</li>
+<li>
+<p>Script shouldn’t contain:</p>
+<ul>
+<li>Other modules</li>
+<li><code>eval</code> and <code>exec</code></li>
+<li>Functions in global scope (function nesting is allowed)</li>
+</ul>
+</li>
+</ul>
+<p>Following is the default grader script:</p>
+<pre><code class="language-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">judge</span><span class="hljs-params">(input, output, prog_output)</span>:</span>
+        <span class="hljs-string">''' Script to determine WA/AC '''</span>
+        data1 =  output.strip()
+        data2 =  prog_output.strip()
+
+        state = data1 == data2
+        <span class="hljs-keyword">if</span> (state):
+            msg = <span class="hljs-string">'OK'</span>
+        <span class="hljs-keyword">else</span>:
+            msg = <span class="hljs-string">'Strings missmatch: '</span> + data2[<span class="hljs-number">0</span>:<span class="hljs-number">10</span>] + <span class="hljs-string">" (expected) - "</span>+data1[<span class="hljs-number">0</span>:<span class="hljs-number">10</span>] + <span class="hljs-string">" (got)"</span>
+
+        <span class="hljs-keyword">return</span> (state, msg)</code></pre>
+<div class="note">
+<ul>
+<li>
+<p>Default grader compares program output and expected output.</p>
+</li>
+<li>
+<p><code>input</code> parameter is not used, but might be helpful in other situations.</p>
+</li>
+</ul>
+</div>
+</div><div id="judge-testcases" class="resource"><h3 class="resource-heading">Testcases <a href="#judge-testcases" class="permalink">&nbsp;&para;</a></h3><p>Upload a testcase for later use. <em>Access level 2 (moderator)</em></p>
+<p>Useful in cases where:</p>
+<ul>
+<li>
+<p>Testcases are large</p>
+</li>
+<li>
+<p>There are lots of submissions running same tests</p>
+</li>
+<li>
+<p>Clientside usage with <em>Passive Submissions</em></p>
+</li>
+</ul>
+<div id="judge-testcases-put" class="action put"><h4 class="action-heading"><div class="name">Store testcases</div><a href="#judge-testcases-put" class="method put">PUT</a><code class="uri">/testcases</code></h4><h4>Example URI</h4><div class="definition"><span class="method put">PUT</span>&nbsp;<span class="uri"><span class="hostname">http://localhost:5000/api/v0</span>/testcases</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>testcases</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>List of tuples</p>
 </dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>List of lists is also acceptable.</p>
 </div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">multipart/form-data</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
     "testcases": "[
         ('1000 2', '15251'),
         ('214 5' '2151')
     ]"
-}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">success</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
   "<span class="hljs-attribute">testcases_id</span>": <span class="hljs-value"><span class="hljs-number">313</span>
-</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="settings" class="resource-group"><h2 class="group-heading">Settings <a href="#settings" class="permalink">&para;</a></h2><div id="settings-tokens" class="resource"><h3 class="resource-heading">Tokens <a href="#settings-tokens" class="permalink">&nbsp;&para;</a></h3><p>Create tokens and grant permissions. <em>Access level 1 (administrator)</em></p>
-<div id="settings-tokens-post" class="action post"><h4 class="action-heading"><div class="name">Token</div><a href="#settings-tokens-post" class="method post">POST</a><code class="uri">/token</code></h4><h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname">http://localhost:5000/api/v0</span>/token</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>owner</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Token owner or identification</p>
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="settings" class="resource-group"><h2 class="group-heading">Settings <a href="#settings" class="permalink">&para;</a></h2><div id="settings-tokens" class="resource"><h3 class="resource-heading">Tokens <a href="#settings-tokens" class="permalink">&nbsp;&para;</a></h3><p>Create tokens and grant permissions.</p>
+<div id="settings-tokens-post" class="action post"><h4 class="action-heading"><div class="name">Create a new Token</div><a href="#settings-tokens-post" class="method post">POST</a><code class="uri">/token</code></h4><p><em>Access level 1 (administrator)</em></p>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname">http://localhost:5000/api/v0</span>/token</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>owner</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Token owner or identification</p>
 </dd><dt>access_level</dt><dd><code>number</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>What requests token has permission to access.
-Levels are as follows: administrator, moderator, user, public</p>
-<p class="choices"><strong>Choices:&nbsp;</strong><code>1</code> <code>2</code> <code>3</code> <code>4</code> </p></dd></dl></div></div></div><div id="settings-info" class="resource"><h3 class="resource-heading">Info <a href="#settings-info" class="permalink">&nbsp;&para;</a></h3><p>Relevant API information and settings currently set in place. <em>Access level / (none)</em></p>
-<div id="settings-info-get" class="action get"><h4 class="action-heading"><div class="name">Info</div><a href="#settings-info-get" class="method get">GET</a><code class="uri">/info</code></h4><h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://localhost:5000/api/v0</span>/info</span></div><div class="title"><strong>Request&nbsp;&nbsp;<code>/info</code></strong></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
-    "<span class="hljs-attribute">token_access</span>": <span class="hljs-value"><span class="hljs-literal">false</span></span>,
-    "<span class="hljs-attribute">workers</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="settings-settings" class="resource"><h3 class="resource-heading">Settings <a href="#settings-settings" class="permalink">&nbsp;&para;</a></h3><p>Change API settings. <em>Access level 1 (administrator)</em></p>
+More information about access levels can be found <a href="/#header-authorization">here</a></p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>1</code> <code>2</code> <code>3</code> <code>4</code> </p></dd><dt>expiration</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<p>Number of seconds token will be valid for, -1 for indefinite</p>
+<ul>
+<li>default -1</li>
+</ul>
+</dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">multipart/form-data</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    "<span class="hljs-attribute">owner</span>": <span class="hljs-value"><span class="hljs-string">"Stevo"</span></span>,
+    "<span class="hljs-attribute">access_level</span>": <span class="hljs-value"><span class="hljs-number">5</span></span>,
+    "<span class="hljs-attribute">expiration</span>": <span class="hljs-value"><span class="hljs-number">60</span>*<span class="hljs-number">60</span>*<span class="hljs-number">24</span>*<span class="hljs-number">365</span></span>,
+}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    "<span class="hljs-attribute">success</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+    "<span class="hljs-attribute">token</span>": <span class="hljs-value"><span class="hljs-string">"iojageiogoani1390fmalnAIBGENgi13nK"</span></span>,
+}</code></pre><div style="height: 1px;"></div></div></div></div><div id="settings-tokens-delete" class="action delete"><h4 class="action-heading"><div class="name">Delete token</div><a href="#settings-tokens-delete" class="method delete">DELETE</a><code class="uri">/token</code></h4><p>Permanently delete a token. <em>Access level 1 (administrator)</em></p>
+<div class="warning">
+<ul>
+<li>
+<p>One of two parameters must be provided.</p>
+</li>
+<li>
+<p>If owner field is given, all tokens with corresponding owner will be deleted</p>
+</li>
+<li>
+<p>If both parameters are provided, the <em>owner</em> will be ignored</p>
+</li>
+</ul>
+</div>
+<h4>Example URI</h4><div class="definition"><span class="method delete">DELETE</span>&nbsp;<span class="uri"><span class="hostname">http://localhost:5000/api/v0</span>/token</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>token_delete</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<p>Token to delete</p>
+</dd><dt>owner</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<p>Owner of the token(s) to delete</p>
+</dd></dl></div></div><div id="settings-tokens-get" class="action get"><h4 class="action-heading"><div class="name">Token information</div><a href="#settings-tokens-get" class="method get">GET</a><code class="uri">/token</code></h4><p><em>Access level / (none)</em></p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://localhost:5000/api/v0</span>/token</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>token</p>
+</dd></dl></div><div class="title"><strong>Request&nbsp;&nbsp;<code>/token?token=iojageiogoani1390fmalnAIBGENgi13nK</code></strong></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">access_level</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+  "<span class="hljs-attribute">expiration</span>": <span class="hljs-value"><span class="hljs-number">9999998399196362</span></span>,
+  "<span class="hljs-attribute">owner</span>": <span class="hljs-value"><span class="hljs-string">"stevo"</span></span>,
+  "<span class="hljs-attribute">success</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+  "<span class="hljs-attribute">token</span>": <span class="hljs-value"><span class="hljs-string">"iojageiogoani1390fmalnAIBGENgi13nK"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="settings-info" class="resource"><h3 class="resource-heading">Info <a href="#settings-info" class="permalink">&nbsp;&para;</a></h3><p>Relevant API information and settings currently set in place. <em>Access level / (none)</em></p>
+<div id="settings-info-get" class="action get"><h4 class="action-heading"><div class="name">Mat-judge information</div><a href="#settings-info-get" class="method get">GET</a><code class="uri">/info</code></h4><h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://localhost:5000/api/v0</span>/info</span></div><div class="title"><strong>Request&nbsp;&nbsp;<code>/info</code></strong></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">ip_status_timeout</span>": <span class="hljs-value"><span class="hljs-number">100</span></span>,
+  "<span class="hljs-attribute">ip_submit_timeout</span>": <span class="hljs-value"><span class="hljs-number">5000</span></span>,
+  "<span class="hljs-attribute">languages</span>": <span class="hljs-value">[
+    <span class="hljs-string">"c++11"</span>,
+    <span class="hljs-string">"c++14"</span>,
+    <span class="hljs-string">"c++17"</span>
+  ]</span>,
+  "<span class="hljs-attribute">passive_submissions</span>": <span class="hljs-value"><span class="hljs-literal">false</span></span>,
+  "<span class="hljs-attribute">token_access</span>": <span class="hljs-value"><span class="hljs-literal">false</span></span>,
+  "<span class="hljs-attribute">workers_active</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="settings-settings" class="resource"><h3 class="resource-heading">Settings <a href="#settings-settings" class="permalink">&nbsp;&para;</a></h3><p>Change API settings. <em>Access level 1 (administrator)</em></p>
 <div id="settings-settings-post" class="action post"><h4 class="action-heading"><div class="name">Change API settings</div><a href="#settings-settings-post" class="method post">POST</a><code class="uri">/settings</code></h4><h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname">http://localhost:5000/api/v0</span>/settings</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>token_access</dt><dd><code>bool</code>&nbsp;<span>(optional)</span>&nbsp;<p>Disable/enable token access</p>
-</dd></dl></div></div></div></section></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 22 Sep 2020</p><script>/* eslint-env browser */
+<p class="choices"><strong>Choices:&nbsp;</strong><code>True</code> <code>False</code> </p></dd><dt>passive_submissions</dt><dd><code>bool</code>&nbsp;<span>(optional)</span>&nbsp;<p>Disable/enable <a href="/#judge">Passive submissions</a></p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>True</code> <code>False</code> </p></dd><dt>ip_status_timeout</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<p>Cooldown period after status request in <strong>milliseconds</strong> (only for status requests)</p>
+<ul>
+<li>Default <code>100</code></li>
+</ul>
+</dd><dt>ip_submit_timeout</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<p>Cooldown period after submit request in <strong>milliseconds</strong> (only for submit requests)</p>
+<ul>
+<li>Default <code>5000</code></li>
+</ul>
+</dd></dl></div></div></div></section><section id="examples" class="resource-group"><h2 class="group-heading">Examples <a href="#examples" class="permalink">&para;</a></h2><p>The following examples will illustrate how to use the API.</p>
+<h2 id="header-submitting-code">Submitting code <a class="permalink" href="#header-submitting-code" aria-hidden="true">¶</a></h2>
+<p>Let’s define the following problem:</p>
+<blockquote>
+<p>Read two integers from standard input, and output their sum.</p>
+</blockquote>
+<p>The first thing we should do is make up some test cases.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">Input</th>
+<th>output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">1 3</td>
+<td>4</td>
+</tr>
+<tr>
+<td style="text-align:right">-1 4</td>
+<td>3</td>
+</tr>
+<tr>
+<td style="text-align:right">10 5</td>
+<td>15</td>
+</tr>
+</tbody>
+</table>
+<p>We need to save these test cases as a list of tuples. Lets create a file <code>testcases.txt</code> and paste in the following:</p>
+<pre><code class="language-json">[
+    (<span class="hljs-string">"1 3"</span>, <span class="hljs-string">"4"</span>),
+    (<span class="hljs-string">"-1 4"</span>, <span class="hljs-string">"3"</span>),
+    (<span class="hljs-string">"10 5"</span>, <span class="hljs-string">"15"</span>)
+]</code></pre>
+<p>Now lets write our program for this problem and save it to <code>problem.cpp</code></p>
+<pre><code class="language-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> a,b;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cin</span> &gt;&gt;a&gt;&gt;b;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; a+b;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre>
+<p>The only thing left now is to call our API. We can use curl for this:</p>
+<pre><code class="language-js">curl -X POST -H <span class="hljs-string">"Content-Type: application/x-www-form-urlencoded"</span>
+     --data-urlencode code@program.cpp --data-urlencode testcases@testcases.txt
+     --data-urlencode language=c++<span class="hljs-number">11</span>
+     http:<span class="hljs-comment">//localhost:5000/api/v0/submit</span></code></pre>
+<p>And we get the following response:</p>
+<pre><code class="language-js">{
+    <span class="hljs-string">"submission_id"</span>: <span class="hljs-number">16</span>,
+    <span class="hljs-string">"success"</span>:<span class="hljs-literal">true</span>
+}</code></pre>
+<div class="note">
+<ul>
+<li>Other optional arguments were omitted.</li>
+</ul>
+</div>
+<h2 id="header-checking-the-submission-status">Checking the submission status <a class="permalink" href="#header-checking-the-submission-status" aria-hidden="true">¶</a></h2>
+<p>Let’s check the status of previous submission.</p>
+<pre><code class="language-js">curl http:<span class="hljs-comment">//localhost:5000/api/v0/status?submission_id=16</span></code></pre>
+<p>We get following response:</p>
+<pre><code class="language-js">{
+    <span class="hljs-string">"code"</span>: <span class="hljs-string">"AC"</span>,
+    <span class="hljs-string">"judged"</span>: <span class="hljs-number">2</span>,
+    <span class="hljs-string">"run_time"</span>: <span class="hljs-number">4</span>,
+    <span class="hljs-string">"running"</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-string">"success"</span>: <span class="hljs-literal">true</span>
+}</code></pre>
+<p>Let’s check with <code>output</code> parameter to get the detailed report of each test case:</p>
+<pre><code class="language-js">curl http:<span class="hljs-comment">//localhost:5000/api/v0/status?submission_id=16&amp;output=True</span></code></pre>
+<div class="note">
+<p>On Windows you should enclose url string with double quotes, since it may complain about ‘&amp;’ character:</p>
+<pre><code class="language-js">curl <span class="hljs-string">"http://localhost:5000/api/v0/status?submission_id=16&amp;output=True"</span></code></pre>
+</div>
+<pre><code class="language-js">{
+    <span class="hljs-string">"code"</span>: <span class="hljs-string">"AC"</span>,
+    <span class="hljs-string">"judged"</span>: <span class="hljs-number">3</span>,
+    <span class="hljs-string">"output"</span>: [
+        [
+            <span class="hljs-string">"AC"</span>,
+            <span class="hljs-string">"1"</span>,
+            <span class="hljs-string">"4"</span>,
+            <span class="hljs-string">"OK"</span>
+        ],
+        [
+            <span class="hljs-string">"AC"</span>,
+            <span class="hljs-string">"1"</span>,
+            <span class="hljs-string">"3"</span>,
+            <span class="hljs-string">"OK"</span>
+        ],
+        [
+            <span class="hljs-string">"AC"</span>,
+            <span class="hljs-string">"1"</span>,
+            <span class="hljs-string">"15"</span>,
+            <span class="hljs-string">"OK"</span>
+        ]
+    ],
+    <span class="hljs-string">"run_time"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-string">"running"</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-string">"success"</span>: <span class="hljs-literal">true</span>
+}</code></pre>
+<div class="note">
+<p>The <code>output</code> field is a list of lists. Each list corresponds with one test case, in order they appear. The values in each list are as follows:</p>
+<ul>
+<li>
+<p>code - <code>AC</code>, <code>WA</code>, <code>CE</code>, <code>RE</code>, <code>TLE</code>, <code>MLE</code></p>
+</li>
+<li>
+<p>execution time (in <em>milliseconds</em>)</p>
+</li>
+<li>
+<p>programs output</p>
+</li>
+<li>
+<p>judge verdict (grader script)</p>
+</li>
+</ul>
+</div>
+<h2 id="header-uploading-a-testcase">Uploading a testcase <a class="permalink" href="#header-uploading-a-testcase" aria-hidden="true">¶</a></h2>
+<p>Running large amounts of different codes on a same testcase batch, can present a strain on the network, especially if testcases are large in size (measured in MB in some cases).</p>
+<p>To avoid uploading testcases every time, you can store them on the server and then reference them by ID.</p>
+<p>Let’s store previous testcases (assuming they are stored in <code>testcases.txt</code> as shown <a href="/#header-submitting-code">here</a>)</p>
+<pre><code class="language-js">curl -X PUT --data-urlencode testcases@testcases.txt http:<span class="hljs-comment">//localhost:5000/api/v0/testcases</span></code></pre>
+<p>Response will contain <code>testcases_id</code> which you can provide in <a href="/#judge-submission-post">submit</a> request instead of <code>testcases</code>.</p>
+<pre><code class="language-js">{
+    <span class="hljs-string">"success"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-string">"testcase_id"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-string">"testcases"</span>: [
+        [<span class="hljs-string">"1 3"</span>, <span class="hljs-string">"4"</span>],
+        [<span class="hljs-string">"-1 4"</span>, <span class="hljs-string">"3"</span>],
+        [<span class="hljs-string">"10 5"</span>, <span class="hljs-string">"15"</span>]
+    ]
+}</code></pre>
+<h2 id="header-using-custom-grader-script">Using custom grader script <a class="permalink" href="#header-using-custom-grader-script" aria-hidden="true">¶</a></h2>
+<p>Grader script can be useful if there are multiple answers to the problem. For example, let the following problem be given:</p>
+<blockquote>
+<p>Given an integer X, print <strong>one</strong> of its <strong>prime</strong> factors.</p>
+</blockquote>
+<p>Example:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">Input</th>
+<th>output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">100</td>
+<td>5</td>
+</tr>
+<tr>
+<td style="text-align:right">52</td>
+<td>2</td>
+</tr>
+<tr>
+<td style="text-align:right">9</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>Obviously, static output can’t be made, because answer <code>2</code> for <code>X=100</code> is also acceptable.</p>
+<p>In this case, in testcases, you should leave the second argument of tuples as an <strong>empty</strong> string (any value will do, but since it won’t be used, it’s better to leave it blank).</p>
+<p>Now let’s modify the grader script for our problem. We’ll model it based on the <a href="/#judge-grader-script-specifications">default Script</a>. Make sure you have read all <em>rules</em> regarding grader scripts <a href="/#judge-grader-script-specifications">here</a>.</p>
+<pre><code class="language-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">judge</span><span class="hljs-params">(input, output, prog_output)</span>:</span>
+        <span class="hljs-string">''' Script to determine WA/AC '''</span>
+        <span class="hljs-keyword">try</span>: <span class="hljs-comment"># First let's try to convert program output to integer</span>
+            prog_output = int(prog_output)
+            input = int(input)
+        <span class="hljs-keyword">except</span>: <span class="hljs-comment"># If program returned something that cant be converted to integer</span>
+            <span class="hljs-keyword">return</span> (<span class="hljs-keyword">False</span>, <span class="hljs-string">"Program returned non-integer value"</span>)
+
+        <span class="hljs-comment"># one line function to check if integer is prime</span>
+        is_prime = <span class="hljs-keyword">lambda</span> x: sum([<span class="hljs-number">1</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">2</span>,x) <span class="hljs-keyword">if</span> x%i==<span class="hljs-number">0</span>])==<span class="hljs-number">0</span>
+
+        <span class="hljs-keyword">if</span> is_prime(prog_output) <span class="hljs-keyword">and</span> prog_output &gt; <span class="hljs-number">1</span>:
+            <span class="hljs-keyword">if</span> (input%prog_output == <span class="hljs-number">0</span>):
+                <span class="hljs-keyword">return</span> (<span class="hljs-keyword">True</span>, <span class="hljs-string">"Ok"</span>)
+            <span class="hljs-keyword">else</span>:
+                <span class="hljs-keyword">return</span> (<span class="hljs-keyword">False</span>, <span class="hljs-string">"Integer isnt a factor"</span>)
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">return</span> (<span class="hljs-keyword">False</span>, <span class="hljs-string">"Integer is not prime"</span>)</code></pre>
+</section></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 27 Sep 2020</p><script>/* eslint-env browser */
 /* eslint quotes: [2, "single"] */
 'use strict';
 

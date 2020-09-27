@@ -1,5 +1,5 @@
 # Mat-judge API
-Execute, evaluate and judge code in an isolated secure enviroment, all by simple API calls.
+Execute, evaluate and judge code in an isolated, secure enviroment, all by simple API calls.
 
 ## Overview
 Mat-judge is an open source online judging system. It executes and evaluates code based on specified parameters. With easy installation, you can integrate it into your application in no time :rocket:
@@ -20,7 +20,7 @@ Features include:
 
 ![alt text](https://github.com/stevomitric/mat-judge/blob/master/docs/mat-judge.png?raw=true)
 
-## Instalation
+## Installation
 
 Since this is built with pure python3.6, without any additional modules (except flask), you can run it on Windows, Linux or Mac. Assuming you have python 3.x and pip3 installed:
 

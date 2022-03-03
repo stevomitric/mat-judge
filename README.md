@@ -1,5 +1,5 @@
 # Mat-judge API
-Execute, evaluate and judge code in an isolated, secure enviroment, all by simple API calls.
+Execute, evaluate and judge code in an isolated, secure environment, all by simple API calls.
 
 ## Overview
 Mat-judge is an open source online judging system. It executes and evaluates code based on specified parameters. With easy installation, you can integrate it into your application in no time :rocket:
@@ -18,11 +18,10 @@ Features include:
 * Clientside/Serverside usage
 * Request limitations and overhead management
 
-![alt text](https://github.com/stevomitric/mat-judge/blob/master/docs/mat-judge.png?raw=true)
 
 ## Installation
 
-Since this is built with pure python3.6, without any additional modules (except flask), you can run it on Windows, Linux or Mac. Assuming you have python 3.x and pip3 installed:
+Since this is built with pure *python 3.6*, without any additional modules (except flask), you can run it on Windows, Linux or Mac. Assuming you have python 3.x and `pip3` installed:
 
 * Download or clone mat-judge [github](https://github.com/stevomitric/mat-judge) repo.
 * install flask module for python3
@@ -32,7 +31,7 @@ Since this is built with pure python3.6, without any additional modules (except 
 
 You're all set!
 
-You can run `python3 api.py --help` to view command-line options for api.
+You can run `python3 api.py --help` to view command-line options for the API.
 
 By default, if you're running Linux, a single worker module will be spawned. You can take advantage of the *worker distribution* feature and run multiple workers on different machines, expanding resources and increasing maximum workload. This is recommended (and easily done) by opening an ssh tunnel and securely connecting the worker to the API.
 
@@ -44,4 +43,4 @@ Developed by *Stevo Mitric*, Software Engineering student at ETF, Belgrade. *ste
 
 Project code name: *Mat-judge*
 
-# Ussage & [Documentation](https://htmlpreview.github.io/?https://github.com/stevomitric/mat-judge/blob/master/docs/mat-judge.html "Docs")
+# Usage & [Documentation](https://htmlpreview.github.io/?https://github.com/stevomitric/mat-judge/blob/master/docs/mat-judge.html "Docs")
